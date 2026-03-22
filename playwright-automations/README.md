@@ -65,6 +65,20 @@ Three-page course platform with a full checkout flow:
 
 **Stack:** React 19, TypeScript, Vite, React Router, React Hook Form, Yup, Tailwind CSS
 
+### Screenshots
+
+**Home — course listing**
+
+<img src="screenshots/site-home.png" width="600" />
+
+**Course Detail**
+
+<img src="screenshots/site-course-detail.png" width="600" />
+
+**Checkout / Payment**
+
+<img src="screenshots/site-payment.png" width="600" />
+
 ---
 
 ## Test Suite
