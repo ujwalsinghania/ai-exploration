@@ -33,7 +33,7 @@ This project's test suite was written with the help of **Claude Code** (Anthropi
 
 **Claude correcting failures after the first run:**
 
-<img src="screenshots/failure-corrections.png" width="600" />
+<img src="screenshots/failure-corrections.png" width="400" />
 
 > After the initial run returned 5 failures, Claude read the component source, identified the root causes (e.g. `Explore Courses` and `Browse More Courses` are `<button>` elements not links; the rating selector matched multiple elements), and patched each selector.
 
