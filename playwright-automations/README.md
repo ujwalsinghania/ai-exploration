@@ -17,7 +17,7 @@ This project's test suite was written with the help of **Claude Code** (Anthropi
 
 **Video — Claude executing the plan and writing tests:**
 
-<video src="screenshots/execution.mov" width="600" controls></video>
+<video src="screenshots/execution.mp4" width="600" controls></video>
 
 > Claude writing all spec files, running them headed, and iterating on failures in one session.
 
