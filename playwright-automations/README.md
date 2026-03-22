@@ -17,7 +17,7 @@ This project's test suite was written with the help of **Claude Code** (Anthropi
 
 **Video — Claude executing the plan and writing tests:**
 
-https://github.com/user-attachments/assets/execution.mov
+<video src="screenshots/execution.mov" width="600" controls></video>
 
 > Claude writing all spec files, running them headed, and iterating on failures in one session.
 
@@ -25,7 +25,7 @@ https://github.com/user-attachments/assets/execution.mov
 
 **Claude generating the test plan:**
 
-![Claude generating the test plan](screenshots/plan.png)
+<img src="screenshots/plan.png" width="600" />
 
 > Claude explored the codebase — pages, routes, `data-testid` selectors, Yup validation rules — and produced a structured plan before writing a single line of test code.
 
@@ -33,7 +33,7 @@ https://github.com/user-attachments/assets/execution.mov
 
 **Claude correcting failures after the first run:**
 
-![Claude correcting test failures](screenshots/failure-corrections.png)
+<img src="screenshots/failure-corrections.png" width="600" />
 
 > After the initial run returned 5 failures, Claude read the component source, identified the root causes (e.g. `Explore Courses` and `Browse More Courses` are `<button>` elements not links; the rating selector matched multiple elements), and patched each selector.
 
@@ -41,13 +41,13 @@ https://github.com/user-attachments/assets/execution.mov
 
 **E2E coverage report — 100% across all pages and components:**
 
-![E2E coverage report](screenshots/coverage-1.png)
+<img src="screenshots/coverage-1.png" width="600" />
 
 ---
 
 **Unit coverage report — widgets folder (FormField + SectionCard):**
 
-![Unit coverage report — widgets](screenshots/coverage-2.png)
+<img src="screenshots/coverage-2.png" width="600" />
 
 ---
 
