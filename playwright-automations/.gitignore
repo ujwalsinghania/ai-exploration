@@ -37,4 +37,5 @@ playwright/.cache/
 # Coverage
 coverage/
 .nyc_output/
+.coverage-unit/
 .DS_Store
