@@ -1,8 +1,26 @@
-import { BorderRadius, Colors, FontSize } from "@/constants/theme";
-import { useCart } from "@/context/CartContext";
+// React / Built-in
+import { StyleSheet, Text, View } from "react-native";
+
+// Expo / Third-party
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+
+// Internal
+import { useCart } from "@/context/CartContext";
+
+// Constants
+import { BorderRadius, Colors } from "@/constants/theme";
+import { TAB_BAR_LABEL_STYLE, TAB_BAR_STYLE } from "./constants";
+
+function HomeTabIcon({ color, focused }: { color: string; focused: boolean }) {
+  return (
+    <Ionicons
+      name={focused ? "home" : "home-outline"}
+      size={24}
+      color={color}
+    />
+  );
+}
 
 function CartTabIcon({ color, focused }: { color: string; focused: boolean }) {
   const { getItemCount } = useCart();
@@ -31,18 +49,8 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors.primary,
         tabBarInactiveTintColor: Colors.textLight,
         headerShown: false,
-        tabBarStyle: {
-          backgroundColor: Colors.white,
-          borderTopWidth: 1,
-          borderTopColor: Colors.border,
-          height: 60,
-          paddingBottom: 8,
-          paddingTop: 4,
-        },
-        tabBarLabelStyle: {
-          fontSize: FontSize.xs,
-          fontWeight: "600",
-        },
+        tabBarStyle: TAB_BAR_STYLE,
+        tabBarLabelStyle: TAB_BAR_LABEL_STYLE,
       }}
     >
       <Tabs.Screen
@@ -50,11 +58,7 @@ export default function TabLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? "home" : "home-outline"}
-              size={24}
-              color={color}
-            />
+            <HomeTabIcon color={color} focused={focused} />
           ),
         }}
       />

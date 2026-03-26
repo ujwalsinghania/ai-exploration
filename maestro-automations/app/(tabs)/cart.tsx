@@ -1,31 +1,39 @@
-import { BorderRadius, Colors, FontSize, Spacing } from "@/constants/theme";
-import { useCart } from "@/context/CartContext";
-import { Ionicons } from "@expo/vector-icons";
+// React / Built-in
 import { useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
   Modal,
-  Platform,
   ScrollView,
-  StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 
-interface FormData {
-  address: string;
-  phone: string;
-  email: string;
-}
+// Expo / Third-party
+import { Ionicons } from "@expo/vector-icons";
 
-interface FormErrors {
-  address?: string;
-  phone?: string;
-  email?: string;
-}
+// Internal
+import { CustomTextInput } from "@/components/CustomTextInput";
+import { useCart } from "@/context/CartContext";
+
+// Constants
+import { Colors } from "@/constants/theme";
+import {
+  DELIVERY_FEE,
+  INITIAL_FORM_DATA,
+  KEYBOARD_BEHAVIOR,
+  PHONE_SANITIZE_REGEX,
+} from "./cart/constants";
+
+// Types
+import type { FormData, FormErrors } from "./cart/types";
+
+// Utils
+import { getVegDotInnerStyle, getVegDotStyle, validate } from "./cart/utils";
+
+// Styles
+import { styles } from "./cart/styles";
 
 export default function CartScreen() {
   const {
@@ -36,33 +44,15 @@ export default function CartScreen() {
     clearCart,
     getItemCount,
   } = useCart();
-  const [formData, setFormData] = useState<FormData>({
-    address: "",
-    phone: "",
-    email: "",
-  });
+  const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const validate = (): boolean => {
-    const errors: FormErrors = {};
-    if (!formData.address.trim()) {
-      errors.address = "Address is required";
-    } else if (formData.address.trim().length < 10) {
-      errors.address = "Please enter a complete address";
+  const handleChange = (key: keyof FormData, text: string) => {
+    setFormData((prev) => ({ ...prev, [key]: text }));
+    if (formErrors[key]) {
+      setFormErrors((prev) => ({ ...prev, [key]: undefined }));
     }
-    if (!formData.phone.trim()) {
-      errors.phone = "Phone number is required";
-    } else if (!/^\d{10}$/.test(formData.phone.trim())) {
-      errors.phone = "Enter a valid 10-digit phone number";
-    }
-    if (!formData.email.trim()) {
-      errors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
-      errors.email = "Enter a valid email address";
-    }
-    setFormErrors(errors);
-    return Object.keys(errors).length === 0;
   };
 
   const handlePlaceOrder = () => {
@@ -73,27 +63,50 @@ export default function CartScreen() {
       );
       return;
     }
-    if (validate()) {
+    const errors = validate(formData);
+    setFormErrors(errors);
+    if (Object.keys(errors).length === 0) {
       setShowSuccess(true);
     }
+  };
+
+  const handleAddressChange = (text: string) => {
+    handleChange("address", text);
+  };
+
+  const handlePhoneChange = (text: string) => {
+    handleChange("phone", text.replace(PHONE_SANITIZE_REGEX, ""));
+  };
+
+  const handleEmailChange = (text: string) => {
+    handleChange("email", text);
+  };
+
+  const handleDecreaseQuantity = (id: string, quantity: number) => {
+    if (quantity <= 1) {
+      removeFromCart(id);
+    } else {
+      updateQuantity(id, quantity - 1);
+    }
+  };
+
+  const handleIncreaseQuantity = (id: string, quantity: number) => {
+    updateQuantity(id, quantity + 1);
   };
 
   const handleSuccessClose = () => {
     setShowSuccess(false);
     clearCart();
-    setFormData({ address: "", phone: "", email: "" });
+    setFormData(INITIAL_FORM_DATA);
     setFormErrors({});
   };
 
-  const deliveryFee = items.length > 0 ? 40 : 0;
   const subtotal = getTotal();
+  const deliveryFee = items.length > 0 ? DELIVERY_FEE : 0;
   const total = subtotal + deliveryFee;
 
   return (
-    <KeyboardAvoidingView
-      style={styles.flex}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-    >
+    <KeyboardAvoidingView style={styles.flex} behavior={KEYBOARD_BEHAVIOR}>
       <ScrollView
         testID="cart-screen"
         style={styles.container}
@@ -128,24 +141,8 @@ export default function CartScreen() {
                   style={styles.cartItem}
                 >
                   <View style={styles.cartItemLeft}>
-                    <View
-                      style={[
-                        styles.vegDot,
-                        {
-                          borderColor: item.isVeg ? Colors.veg : Colors.nonVeg,
-                        },
-                      ]}
-                    >
-                      <View
-                        style={[
-                          styles.vegDotInner,
-                          {
-                            backgroundColor: item.isVeg
-                              ? Colors.veg
-                              : Colors.nonVeg,
-                          },
-                        ]}
-                      />
+                    <View style={getVegDotStyle(item.isVeg)}>
+                      <View style={getVegDotInnerStyle(item.isVeg)} />
                     </View>
                     <View style={styles.cartItemInfo}>
                       <Text style={styles.cartItemName} numberOfLines={1}>
@@ -158,7 +155,9 @@ export default function CartScreen() {
                     <TouchableOpacity
                       testID={`decrease-${item.id}`}
                       style={styles.qtyButton}
-                      onPress={() => updateQuantity(item.id, item.quantity - 1)}
+                      onPress={() =>
+                        handleDecreaseQuantity(item.id, item.quantity)
+                      }
                     >
                       <Ionicons
                         name="remove"
@@ -172,7 +171,9 @@ export default function CartScreen() {
                     <TouchableOpacity
                       testID={`increase-${item.id}`}
                       style={styles.qtyButton}
-                      onPress={() => updateQuantity(item.id, item.quantity + 1)}
+                      onPress={() =>
+                        handleIncreaseQuantity(item.id, item.quantity)
+                      }
                     >
                       <Ionicons name="add" size={16} color={Colors.primary} />
                     </TouchableOpacity>
@@ -208,91 +209,39 @@ export default function CartScreen() {
             <View testID="checkout-form" style={styles.section}>
               <Text style={styles.sectionTitle}>Delivery Details</Text>
 
-              <View style={styles.formField}>
-                <Text style={styles.formLabel}>Delivery Address</Text>
-                <TextInput
-                  testID="address-input"
-                  style={[
-                    styles.formInput,
-                    styles.formTextArea,
-                    formErrors.address && styles.inputError,
-                  ]}
-                  placeholder="Enter your full delivery address"
-                  placeholderTextColor={Colors.textLight}
-                  value={formData.address}
-                  onChangeText={(text) => {
-                    setFormData((prev) => ({ ...prev, address: text }));
-                    if (formErrors.address)
-                      setFormErrors((prev) => ({
-                        ...prev,
-                        address: undefined,
-                      }));
-                  }}
-                  multiline
-                  numberOfLines={3}
-                  textAlignVertical="top"
-                />
-                {formErrors.address && (
-                  <Text testID="address-error" style={styles.errorText}>
-                    {formErrors.address}
-                  </Text>
-                )}
-              </View>
+              <CustomTextInput
+                label="Delivery Address"
+                testID="address-input"
+                placeholder="Enter your full delivery address"
+                value={formData.address}
+                onChangeText={handleAddressChange}
+                error={formErrors.address}
+                multiline
+                numberOfLines={3}
+                textAlignVertical="top"
+              />
 
-              <View style={styles.formField}>
-                <Text style={styles.formLabel}>Phone Number</Text>
-                <TextInput
-                  testID="phone-input"
-                  style={[
-                    styles.formInput,
-                    formErrors.phone && styles.inputError,
-                  ]}
-                  placeholder="10-digit mobile number"
-                  placeholderTextColor={Colors.textLight}
-                  value={formData.phone}
-                  onChangeText={(text) => {
-                    setFormData((prev) => ({
-                      ...prev,
-                      phone: text.replace(/[^0-9]/g, ""),
-                    }));
-                    if (formErrors.phone)
-                      setFormErrors((prev) => ({ ...prev, phone: undefined }));
-                  }}
-                  keyboardType="phone-pad"
-                  maxLength={10}
-                />
-                {formErrors.phone && (
-                  <Text testID="phone-error" style={styles.errorText}>
-                    {formErrors.phone}
-                  </Text>
-                )}
-              </View>
+              <CustomTextInput
+                label="Phone Number"
+                testID="phone-input"
+                placeholder="10-digit mobile number"
+                value={formData.phone}
+                onChangeText={handlePhoneChange}
+                error={formErrors.phone}
+                keyboardType="phone-pad"
+                maxLength={10}
+              />
 
-              <View style={styles.formField}>
-                <Text style={styles.formLabel}>Email Address</Text>
-                <TextInput
-                  testID="email-input"
-                  style={[
-                    styles.formInput,
-                    formErrors.email && styles.inputError,
-                  ]}
-                  placeholder="your@email.com"
-                  placeholderTextColor={Colors.textLight}
-                  value={formData.email}
-                  onChangeText={(text) => {
-                    setFormData((prev) => ({ ...prev, email: text }));
-                    if (formErrors.email)
-                      setFormErrors((prev) => ({ ...prev, email: undefined }));
-                  }}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                />
-                {formErrors.email && (
-                  <Text testID="email-error" style={styles.errorText}>
-                    {formErrors.email}
-                  </Text>
-                )}
-              </View>
+              <CustomTextInput
+                label="Email Address"
+                testID="email-input"
+                placeholder="your@email.com"
+                value={formData.email}
+                onChangeText={handleEmailChange}
+                error={formErrors.email}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
             </View>
 
             {/* ── Place Order ── */}
@@ -355,283 +304,3 @@ export default function CartScreen() {
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  flex: { flex: 1 },
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  contentContainer: {
-    paddingBottom: 40,
-  },
-
-  /* Header */
-  header: {
-    backgroundColor: Colors.white,
-    paddingHorizontal: Spacing.lg,
-    paddingTop: 56,
-    paddingBottom: Spacing.lg,
-    flexDirection: "row",
-    alignItems: "baseline",
-    gap: Spacing.sm,
-  },
-  headerTitle: {
-    fontSize: FontSize.xxl,
-    fontWeight: "800",
-    color: Colors.text,
-  },
-  headerCount: {
-    fontSize: FontSize.md,
-    color: Colors.textSecondary,
-  },
-
-  /* Empty State */
-  emptyState: {
-    alignItems: "center",
-    paddingVertical: 80,
-  },
-  emptyEmoji: { fontSize: 64, marginBottom: Spacing.lg },
-  emptyTitle: {
-    fontSize: FontSize.xl,
-    fontWeight: "700",
-    color: Colors.text,
-    marginBottom: Spacing.sm,
-  },
-  emptySubtitle: {
-    fontSize: FontSize.md,
-    color: Colors.textSecondary,
-    textAlign: "center",
-    paddingHorizontal: Spacing.xxxl,
-  },
-
-  /* Section */
-  section: {
-    backgroundColor: Colors.white,
-    marginHorizontal: Spacing.lg,
-    marginTop: Spacing.lg,
-    borderRadius: BorderRadius.lg,
-    padding: Spacing.lg,
-  },
-  sectionTitle: {
-    fontSize: FontSize.lg,
-    fontWeight: "700",
-    color: Colors.text,
-    marginBottom: Spacing.lg,
-  },
-
-  /* Cart Item */
-  cartItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: Spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.divider,
-  },
-  cartItemLeft: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.sm,
-  },
-  vegDot: {
-    width: 16,
-    height: 16,
-    borderWidth: 1.5,
-    borderRadius: 3,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  vegDotInner: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-  },
-  cartItemInfo: { flex: 1 },
-  cartItemName: {
-    fontSize: FontSize.sm,
-    fontWeight: "600",
-    color: Colors.text,
-  },
-  cartItemPrice: {
-    fontSize: FontSize.xs,
-    color: Colors.textSecondary,
-    marginTop: 2,
-  },
-
-  /* Quantity */
-  quantityControl: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: Colors.primaryLight,
-    borderRadius: BorderRadius.sm,
-    borderWidth: 1,
-    borderColor: Colors.primary,
-    marginHorizontal: Spacing.md,
-  },
-  qtyButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-  },
-  qtyText: {
-    fontSize: FontSize.sm,
-    fontWeight: "700",
-    color: Colors.primary,
-    minWidth: 20,
-    textAlign: "center",
-  },
-  cartItemTotal: {
-    fontSize: FontSize.sm,
-    fontWeight: "600",
-    color: Colors.text,
-    minWidth: 50,
-    textAlign: "right",
-  },
-
-  /* Bill */
-  billRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: Spacing.sm,
-  },
-  billLabel: {
-    fontSize: FontSize.sm,
-    color: Colors.textSecondary,
-  },
-  billValue: {
-    fontSize: FontSize.sm,
-    color: Colors.text,
-  },
-  divider: {
-    height: 1,
-    backgroundColor: Colors.divider,
-    marginVertical: Spacing.sm,
-  },
-  totalLabel: {
-    fontSize: FontSize.lg,
-    fontWeight: "700",
-    color: Colors.text,
-  },
-  totalValue: {
-    fontSize: FontSize.lg,
-    fontWeight: "700",
-    color: Colors.text,
-  },
-
-  /* Form */
-  formField: {
-    marginBottom: Spacing.lg,
-  },
-  formLabel: {
-    fontSize: FontSize.sm,
-    fontWeight: "600",
-    color: Colors.text,
-    marginBottom: Spacing.sm,
-  },
-  formInput: {
-    backgroundColor: Colors.background,
-    borderRadius: BorderRadius.sm,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.md,
-    fontSize: FontSize.md,
-    color: Colors.text,
-  },
-  formTextArea: {
-    minHeight: 80,
-  },
-  inputError: {
-    borderColor: Colors.error,
-    backgroundColor: "#FFF5F5",
-  },
-  errorText: {
-    fontSize: FontSize.xs,
-    color: Colors.error,
-    marginTop: 4,
-  },
-
-  /* Place Order */
-  placeOrderButton: {
-    backgroundColor: Colors.primary,
-    marginHorizontal: Spacing.lg,
-    marginTop: Spacing.xl,
-    borderRadius: BorderRadius.md,
-    paddingVertical: Spacing.lg,
-    alignItems: "center",
-  },
-  placeOrderText: {
-    color: Colors.white,
-    fontSize: FontSize.lg,
-    fontWeight: "700",
-  },
-
-  /* Success Modal */
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: Colors.overlay,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: Spacing.xxl,
-  },
-  modalContent: {
-    backgroundColor: Colors.white,
-    borderRadius: BorderRadius.xl,
-    padding: Spacing.xxl,
-    width: "100%",
-    alignItems: "center",
-  },
-  successIcon: {
-    marginBottom: Spacing.lg,
-  },
-  successTitle: {
-    fontSize: FontSize.xxl,
-    fontWeight: "800",
-    color: Colors.text,
-    marginBottom: Spacing.sm,
-  },
-  successSubtitle: {
-    fontSize: FontSize.md,
-    color: Colors.textSecondary,
-    textAlign: "center",
-    lineHeight: 22,
-    marginBottom: Spacing.xl,
-  },
-  successDetails: {
-    width: "100%",
-    backgroundColor: Colors.background,
-    borderRadius: BorderRadius.sm,
-    padding: Spacing.lg,
-    marginBottom: Spacing.xl,
-  },
-  successRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: Spacing.sm,
-  },
-  successLabel: {
-    fontSize: FontSize.sm,
-    color: Colors.textSecondary,
-  },
-  successValue: {
-    fontSize: FontSize.sm,
-    fontWeight: "600",
-    color: Colors.text,
-    flex: 1,
-    textAlign: "right",
-    marginLeft: Spacing.md,
-  },
-  successButton: {
-    backgroundColor: Colors.success,
-    borderRadius: BorderRadius.md,
-    paddingVertical: Spacing.md,
-    paddingHorizontal: Spacing.xxxl,
-    width: "100%",
-    alignItems: "center",
-  },
-  successButtonText: {
-    color: Colors.white,
-    fontSize: FontSize.lg,
-    fontWeight: "700",
-  },
-});

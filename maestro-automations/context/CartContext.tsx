@@ -1,4 +1,4 @@
-import type { CartItem, MenuItem } from "@/constants/data";
+// React / Built-in
 import React, {
   createContext,
   useCallback,
@@ -7,15 +7,11 @@ import React, {
   type PropsWithChildren,
 } from "react";
 
-interface CartContextType {
-  items: CartItem[];
-  addToCart: (item: MenuItem, restaurantName: string) => void;
-  removeFromCart: (itemId: string) => void;
-  updateQuantity: (itemId: string, quantity: number) => void;
-  clearCart: () => void;
-  getTotal: () => number;
-  getItemCount: () => number;
-}
+// Constants
+import type { CartItem, MenuItem } from "@/constants/data";
+
+// Types
+import type { CartContextType } from "./types";
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
