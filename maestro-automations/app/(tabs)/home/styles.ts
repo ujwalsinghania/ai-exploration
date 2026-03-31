@@ -133,8 +133,8 @@ export const styles = StyleSheet.create({
     paddingVertical: Spacing.md,
   },
   cuisineImage: {
-    width: "75%",
-    aspectRatio: 1,
+    width: ITEM_WIDTH * 0.75,
+    height: ITEM_WIDTH * 0.75,
     borderRadius: BorderRadius.md,
     marginBottom: Spacing.xs,
   },

@@ -1,0 +1,26 @@
+appId: com.ujwal.maestroautomation
+---
+- tapOn:
+    id: home-tab-icon
+- waitForAnimationToEnd
+
+# Navigate to Pizza restaurant list
+- tapOn:
+    id: cuisine-item-pizza
+- assertVisible:
+    id: restaurant-list-header
+- assertVisible: "Pizza Restaurants"
+- assertVisible: "3 restaurants near you"
+
+# All three Pizza restaurants visible
+- assertVisible:
+    id: restaurant-card-p1
+- assertVisible:
+    id: restaurant-name-p1
+- assertVisible: "Domino's Pizza"
+- assertVisible:
+    id: restaurant-card-p2
+- assertVisible: "Pizza Hut"
+- assertVisible:
+    id: restaurant-card-p3
+- assertVisible: "La Pino'z"

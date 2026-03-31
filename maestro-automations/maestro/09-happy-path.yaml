@@ -1,0 +1,59 @@
+appId: com.ujwal.maestroautomation
+---
+- tapOn:
+    id: home-tab-icon
+- waitForAnimationToEnd
+
+# Browse to Biryani → Paradise Biryani
+- tapOn:
+    id: cuisine-item-biryani
+- assertVisible: "Biryani Restaurants"
+- tapOn:
+    id: restaurant-card-b1
+- assertVisible: "Paradise Biryani"
+
+# Add Chicken Dum Biryani (₹299) to cart
+- assertVisible: "Chicken Dum Biryani"
+- tapOn:
+    id: add-to-cart-b1m1
+- assertVisible: "✓ Added"
+
+# Cart badge shows 1
+- assertVisible: "1"
+
+# Navigate back to home, then tap Cart tab
+- pressKey: Back
+- pressKey: Back
+- tapOn:
+    id: cart-tab-icon
+- assertVisible:
+    id: cart-screen
+- assertVisible:
+    id: checkout-form
+
+# Fill valid delivery details
+- tapOn:
+    id: address-input
+- inputText: "42 Baker Street, New Delhi 110001"
+- tapOn:
+    id: phone-input
+- inputText: "9876543210"
+- tapOn:
+    id: email-input
+- inputText: "test@example.com"
+
+# Place order
+- tapOn:
+    id: place-order-button
+
+# Success modal appears
+- assertVisible:
+    id: success-modal
+- assertVisible: "Order Placed!"
+- assertVisible: "42 Baker Street, New Delhi 110001"
+
+# Dismiss modal — cart is cleared
+- tapOn:
+    id: success-modal-close
+- assertVisible:
+    id: empty-cart

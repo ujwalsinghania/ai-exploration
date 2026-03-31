@@ -14,11 +14,13 @@ import { TAB_BAR_LABEL_STYLE, TAB_BAR_STYLE } from "./constants";
 
 function HomeTabIcon({ color, focused }: { color: string; focused: boolean }) {
   return (
-    <Ionicons
-      name={focused ? "home" : "home-outline"}
-      size={24}
-      color={color}
-    />
+    <View testID="home-tab-icon">
+      <Ionicons
+        name={focused ? "home" : "home-outline"}
+        size={24}
+        color={color}
+      />
+    </View>
   );
 }
 
@@ -27,7 +29,7 @@ function CartTabIcon({ color, focused }: { color: string; focused: boolean }) {
   const count = getItemCount();
 
   return (
-    <View>
+    <View testID="cart-tab-icon">
       <Ionicons
         name={focused ? "cart" : "cart-outline"}
         size={26}

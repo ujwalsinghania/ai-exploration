@@ -1,0 +1,39 @@
+appId: com.ujwal.maestroautomation
+---
+- tapOn:
+    id: home-tab-icon
+- waitForAnimationToEnd
+- assertVisible:
+    id: home-screen
+
+# Type search query
+- tapOn:
+    id: search-input
+- inputText: "piz"
+- assertVisible:
+    id: cuisine-item-pizza
+- assertNotVisible:
+    id: cuisine-item-biryani
+- assertNotVisible:
+    id: cuisine-item-burgers
+
+# Clear search restores full grid
+- tapOn:
+    id: search-clear
+- assertVisible:
+    id: cuisine-item-biryani
+- assertVisible:
+    id: cuisine-item-pizza
+- assertVisible:
+    id: cuisine-item-burgers
+- assertVisible:
+    id: cuisine-item-chinese
+
+# Search with no match shows empty state
+- tapOn:
+    id: search-input
+- inputText: "xyznotfound"
+- assertNotVisible:
+    id: cuisine-item-pizza
+- assertNotVisible:
+    id: cuisine-grid

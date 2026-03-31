@@ -1,0 +1,43 @@
+appId: com.ujwal.maestroautomation
+---
+- tapOn:
+    id: home-tab-icon
+- waitForAnimationToEnd
+
+# Navigate to restaurant detail
+- tapOn:
+    id: cuisine-item-pizza
+- assertVisible:
+    id: restaurant-card-p1
+- tapOn:
+    id: restaurant-card-p1
+
+# Verify restaurant detail screen
+- assertVisible:
+    id: restaurant-detail
+- assertVisible:
+    id: restaurant-detail-title
+- assertVisible: "Domino's Pizza"
+
+# Verify first menu item (Margherita — only item shown)
+- assertVisible:
+    id: menu-item-p1m1
+- assertVisible:
+    id: menu-item-name-p1m1
+- assertVisible: "Margherita"
+- assertVisible:
+    id: menu-item-price-p1m1
+- assertVisible: "₹199"
+- assertVisible:
+    id: add-to-cart-p1m1
+- assertVisible: "ADD"
+
+# Add item — button gives feedback
+- tapOn:
+    id: add-to-cart-p1m1
+- assertVisible: "✓ Added"
+
+# Cart badge updates to 1
+- assertVisible:
+    id: cart-badge
+- assertVisible: "1"

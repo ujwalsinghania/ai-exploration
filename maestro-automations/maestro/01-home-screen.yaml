@@ -1,0 +1,23 @@
+appId: com.ujwal.maestroautomation
+---
+- launchApp
+- waitForAnimationToEnd
+- assertVisible:
+    id: home-screen
+- assertVisible:
+    id: home-header
+- assertVisible: "DELIVERY TO"
+- assertVisible:
+    id: hero-banner
+- assertVisible:
+    id: search-bar
+- assertVisible:
+    id: cuisine-grid
+- assertVisible:
+    id: cuisine-item-biryani
+- assertVisible:
+    id: cuisine-item-pizza
+- assertVisible:
+    id: cuisine-item-burgers
+- assertVisible:
+    id: cuisine-item-chinese

@@ -46,9 +46,8 @@ export const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   cardBanner: {
+    width: "100%",
     height: 100,
-    justifyContent: "center",
-    alignItems: "center",
   },
   cardContent: {
     padding: Spacing.lg,

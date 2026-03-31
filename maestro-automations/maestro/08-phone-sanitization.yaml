@@ -1,0 +1,28 @@
+appId: com.ujwal.maestroautomation
+---
+- tapOn:
+    id: home-tab-icon
+- waitForAnimationToEnd
+
+# Add item to cart and go to cart
+- tapOn:
+    id: cuisine-item-pizza
+- tapOn:
+    id: restaurant-card-p1
+- tapOn:
+    id: add-to-cart-p1m1
+- pressKey: Back
+- pressKey: Back
+- tapOn:
+    id: cart-tab-icon
+- assertVisible:
+    id: checkout-form
+
+# Type mixed letters and digits — only digits should remain
+- tapOn:
+    id: phone-input
+- inputText: "abc9876543210"
+
+# Phone field should contain only digits (letters stripped by sanitizer)
+# The field enforces maxLength=10, so result is "9876543210"
+- assertVisible: "9876543210"

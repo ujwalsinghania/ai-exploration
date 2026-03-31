@@ -1,0 +1,68 @@
+appId: com.ujwal.maestroautomation
+---
+- tapOn:
+    id: home-tab-icon
+- waitForAnimationToEnd
+
+# Add item to cart
+- tapOn:
+    id: cuisine-item-pizza
+- tapOn:
+    id: restaurant-card-p1
+- tapOn:
+    id: add-to-cart-p1m1
+- pressKey: Back
+- pressKey: Back
+- tapOn:
+    id: cart-tab-icon
+- assertVisible:
+    id: checkout-form
+
+# Submit empty form — all fields required
+- tapOn:
+    id: place-order-button
+- assertVisible:
+    id: address-error
+- assertVisible: "Address is required"
+- assertVisible:
+    id: phone-error
+- assertVisible: "Phone number is required"
+- assertVisible:
+    id: email-error
+- assertVisible: "Email is required"
+
+# Too-short address (< 10 chars)
+- tapOn:
+    id: address-input
+- inputText: "Hi"
+- tapOn:
+    id: place-order-button
+- assertVisible: "Please enter a complete address"
+
+# Clear and type valid address to dismiss error
+- tapOn:
+    id: address-input
+- eraseText: 50
+- inputText: "123 Main Street Apt 4B"
+
+# Too-short phone (5 digits)
+- tapOn:
+    id: phone-input
+- inputText: "12345"
+- tapOn:
+    id: place-order-button
+- assertVisible: "Enter a valid 10-digit phone number"
+
+# Clear and type valid phone
+- tapOn:
+    id: phone-input
+- eraseText: 50
+- inputText: "9876543210"
+
+# Invalid email
+- tapOn:
+    id: email-input
+- inputText: "notanemail"
+- tapOn:
+    id: place-order-button
+- assertVisible: "Enter a valid email address"

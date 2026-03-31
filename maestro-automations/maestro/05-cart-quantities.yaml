@@ -1,0 +1,50 @@
+appId: com.ujwal.maestroautomation
+---
+- tapOn:
+    id: home-tab-icon
+- waitForAnimationToEnd
+
+# Add Margherita (₹199) to cart
+- tapOn:
+    id: cuisine-item-pizza
+- tapOn:
+    id: restaurant-card-p1
+- tapOn:
+    id: add-to-cart-p1m1
+
+# Navigate back to home, then tap Cart tab
+- pressKey: Back
+- pressKey: Back
+- tapOn:
+    id: cart-tab-icon
+- assertVisible:
+    id: cart-screen
+- assertVisible:
+    id: cart-items
+
+# Initial quantity is 1
+- assertVisible:
+    id: quantity-p1m1
+- assertVisible: "1"
+
+# Increase quantity
+- tapOn:
+    id: increase-p1m1
+- assertVisible: "2"
+- tapOn:
+    id: increase-p1m1
+- assertVisible: "3"
+
+# Decrease quantity
+- tapOn:
+    id: decrease-p1m1
+- assertVisible: "2"
+- tapOn:
+    id: decrease-p1m1
+- assertVisible: "1"
+
+# Decrease to 0 removes item from cart
+- tapOn:
+    id: decrease-p1m1
+- assertVisible:
+    id: empty-cart

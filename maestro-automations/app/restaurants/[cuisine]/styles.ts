@@ -12,9 +12,8 @@ export const styles = StyleSheet.create({
 
   /* Banner */
   banner: {
+    width: "100%",
     height: 220,
-    justifyContent: "center",
-    alignItems: "center",
   },
   /* Info */
   infoContainer: {

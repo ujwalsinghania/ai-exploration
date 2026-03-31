@@ -1,0 +1,42 @@
+appId: com.ujwal.maestroautomation
+---
+- tapOn:
+    id: home-tab-icon
+- waitForAnimationToEnd
+
+# Add one item to cart
+- tapOn:
+    id: cuisine-item-pizza
+- tapOn:
+    id: restaurant-card-p1
+- tapOn:
+    id: add-to-cart-p1m1
+
+# Navigate back to home, then tap Cart tab
+- pressKey: Back
+- pressKey: Back
+- tapOn:
+    id: cart-tab-icon
+- tapOn:
+    id: increase-p1m1
+- tapOn:
+    id: increase-p1m1
+- tapOn:
+    id: increase-p1m1
+- tapOn:
+    id: increase-p1m1
+- tapOn:
+    id: increase-p1m1
+- tapOn:
+    id: increase-p1m1
+- tapOn:
+    id: increase-p1m1
+- tapOn:
+    id: increase-p1m1
+- tapOn:
+    id: increase-p1m1
+
+# Quantity is now 10 — badge should show "9+"
+- assertVisible:
+    id: cart-badge
+- assertVisible: "9+"

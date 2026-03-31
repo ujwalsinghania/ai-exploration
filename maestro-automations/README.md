@@ -1,50 +1,160 @@
-# Welcome to your Expo app 👋
+# Mobile E2E Testing with Maestro + Claude
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A food delivery app built with **Expo (React Native)** — used as a real-world target for demonstrating how to write mobile E2E tests using **Maestro**, with tests authored by **Claude Code**.
 
-## Get started
+---
 
-1. Install dependencies
+## What This Project Demonstrates
 
-   ```bash
-   npm install
-   ```
+- Building a production-style React Native app with Expo Router
+- Writing a complete E2E test suite using Maestro (YAML flows)
+- Using Claude Code to analyse the codebase and generate tests automatically
+- Testing real user flows: browse → add to cart → checkout
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## The App
 
-In the output, you'll find options to open the app in a
+A food delivery app with three core flows:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+**Browse** → Pick a cuisine from a grid of 8 categories, browse restaurants, view menus
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+**Cart** → Add items, adjust quantities, see live bill breakdown (subtotal + ₹40 delivery fee)
 
-## Get a fresh project
+**Checkout** → Fill delivery address, phone, email, place order, see success confirmation
 
-When you're ready, run:
+### Screenshots
 
-```bash
-npm run reset-project
+| Home | Restaurant List | Restaurant Detail |
+|------|----------------|-------------------|
+| ![Home](screenshots/home.png) | ![Restaurant List](screenshots/restaurant-list.png) | ![Restaurant Detail](screenshots/restaurant-item.png) |
+
+| Cart | Claude Generated Tests |
+|------|----------------------|
+| ![Cart](screenshots/cart.png) | ![Generated Tests](screenshots/generated-tests.png) |
+
+---
+
+## Architecture
+
+```
+maestro-automations/
+├── app/
+│   ├── (tabs)/
+│   │   ├── index.tsx          # Home screen — cuisine grid + search
+│   │   └── cart.tsx           # Cart screen — items, billing, checkout form
+│   └── restaurants/
+│       ├── [cuisine].tsx      # Restaurant list (dynamic route)
+│       └── [cuisine]/
+│           └── [id].tsx       # Restaurant detail + menu
+├── components/
+│   └── CustomTextInput.tsx    # Reusable form input with label + inline error
+├── constants/
+│   ├── data.ts                # All static data — cuisines, restaurants, menu items
+│   └── theme.ts               # Design tokens — colors, spacing, typography
+├── context/
+│   └── CartContext.tsx        # Global cart state via React Context
+└── .maestro/
+    └── *.yaml                 # E2E test flows
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## E2E Tests (Maestro)
 
-To learn more about developing your project with Expo, look at the following resources:
+Maestro tests are plain YAML files. Each flow describes a user journey using `tapOn`, `inputText`, and `assertVisible` commands targeting `testID` values.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Flows
 
-## Join the community
+| File                          | What it covers                                                                              |
+| ----------------------------- | ------------------------------------------------------------------------------------------- |
+| `01-home-screen.yaml`         | App launches, cuisine grid and hero banner visible                                          |
+| `02-cuisine-search.yaml`      | Search filters cuisines live, clear restores grid, no-match shows empty state               |
+| `03-restaurant-list.yaml`     | Tapping a cuisine navigates to its restaurant list with correct count                       |
+| `04-add-to-cart.yaml`         | Tap ADD on a menu item, button shows "✓ Added", cart badge increments                       |
+| `05-cart-quantities.yaml`     | Increase/decrease quantity, decrement to 0 removes item                                     |
+| `06-cart-billing.yaml`        | Subtotal + ₹40 delivery = correct total, updates when quantity changes                      |
+| `07-checkout-validation.yaml` | All three field errors shown on empty submit, specific messages per rule                    |
+| `08-phone-sanitization.yaml`  | Non-digit characters stripped from phone input automatically                                |
+| `09-happy-path.yaml`          | Full flow: home → cuisine → restaurant → add item → checkout → success modal → cart cleared |
+| `10-cart-badge-cap.yaml`      | Badge shows "9+" when item count exceeds 9                                                  |
 
-Join our community of developers creating universal apps.
+### Running Tests
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+# Run all flows
+npm run e2e
+
+# Run a single flow
+maestro test .maestro/09-happy-path.yaml
+
+# Interactive debugger
+maestro studio
+```
+
+### Maestro Studio Demo
+
+<!-- Upload screenshots/maestro-studio-demo.mp4 to GitHub and replace the placeholder URL below -->
+https://github.com/user-attachments/assets/placeholder-maestro-studio-demo.mp4
+
+---
+
+## Writing Tests with Claude Code
+
+All 10 E2E flows in this project were generated by **Claude Code** — no manual YAML authoring required.
+
+### How It Works
+
+Claude Code reads the actual source files — screens, components, data, utils — and uses that context to write tests grounded in real implementation details: correct `testID` values, exact item prices, actual validation error messages.
+
+### The Prompt
+
+```
+create a test plan for this app and write test to test-plan md in root.
+e2e tests will be via maestro and utils via jest
+
+write e2e tests
+```
+
+Claude first explored the full codebase — screens, routes, context, utils, and constants — then produced a structured `TEST-PLAN.md` covering every scenario. The second prompt triggered generation of all 10 Maestro flow files in one pass, with assertions derived directly from the source: real `testID` values, exact prices from `data.ts`, and verbatim error messages from `utils.ts`.
+
+### Test Plan First
+
+Before writing flows, Claude produced `TEST-PLAN.md` — a structured breakdown of every E2E scenario and unit test case. The YAML flows implement that plan directly.
+
+---
+
+## Unit Tests (Jest)
+
+Utility functions are tested separately with Jest — no device or emulator needed.
+
+```bash
+npm test
+```
+
+Covered in `__tests__/`:
+
+- `validate()` — all address, phone, and email rules
+- `getVegDotStyle()` / `getVegDotInnerStyle()` — veg/non-veg indicator styles
+- `getCuisineItemStyle()` — cuisine card background color
+- `getListContainerStyle()` / `getScrollContentStyle()` — safe area padding calculations
+
+---
+
+## Setup
+
+```bash
+npm install
+
+# iOS
+npm run ios
+
+# Android
+npm run android
+```
+
+Install Maestro:
+
+```bash
+curl -fsSL "https://get.maestro.mobile.dev" | bash
+```

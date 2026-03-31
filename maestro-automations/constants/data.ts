@@ -39,56 +39,49 @@ export const cuisines: Cuisine[] = [
     id: "biryani",
     name: "Biryani",
     imageUrl:
-      "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=400&q=80&auto=format&fit=crop",
+      "https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg?w=400&h=300&fit=crop",
     color: "#FFF3E0",
   },
   {
     id: "pizza",
     name: "Pizza",
-    imageUrl:
-      "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80&auto=format&fit=crop",
+    imageUrl: "https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg?w=400&h=300&fit=crop",
     color: "#FFEBEE",
   },
   {
     id: "burgers",
     name: "Burgers",
-    imageUrl:
-      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80&auto=format&fit=crop",
+    imageUrl: "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?w=400&h=300&fit=crop",
     color: "#FFF8E1",
   },
   {
     id: "chinese",
     name: "Chinese",
-    imageUrl:
-      "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&q=80&auto=format&fit=crop",
+    imageUrl: "https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg?w=400&h=300&fit=crop",
     color: "#E8F5E9",
   },
   {
     id: "south-indian",
     name: "South Indian",
-    imageUrl:
-      "https://images.unsplash.com/photo-1630383249896-424e482df921?w=400&q=80&auto=format&fit=crop",
+    imageUrl: "https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg?w=400&h=300&fit=crop",
     color: "#F3E5F5",
   },
   {
     id: "north-indian",
     name: "North Indian",
-    imageUrl:
-      "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&q=80&auto=format&fit=crop",
+    imageUrl: "https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?w=400&h=300&fit=crop",
     color: "#E3F2FD",
   },
   {
     id: "desserts",
     name: "Desserts",
-    imageUrl:
-      "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&q=80&auto=format&fit=crop",
+    imageUrl: "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?w=400&h=300&fit=crop",
     color: "#FCE4EC",
   },
   {
     id: "healthy",
     name: "Healthy",
-    imageUrl:
-      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80&auto=format&fit=crop",
+    imageUrl: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?w=400&h=300&fit=crop",
     color: "#E0F2F1",
   },
 ];
@@ -105,8 +98,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 450,
       tags: ["Biryani", "Hyderabadi"],
       color: "#FF9800",
-      imageUrl:
-        "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "b1m1",
@@ -142,8 +134,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 550,
       tags: ["Biryani", "Mughlai"],
       color: "#E65100",
-      imageUrl:
-        "https://images.unsplash.com/photo-1596040033229-a9e4e098e296?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "b2m1",
@@ -170,8 +161,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 400,
       tags: ["Biryani", "North Indian"],
       color: "#F57C00",
-      imageUrl:
-        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/7353380/pexels-photo-7353380.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "b3m1",
@@ -202,8 +192,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 500,
       tags: ["Pizza", "Italian"],
       color: "#D32F2F",
-      imageUrl:
-        "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "p1m1",
@@ -238,8 +227,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 600,
       tags: ["Pizza", "Pasta"],
       color: "#C62828",
-      imageUrl:
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/1566837/pexels-photo-1566837.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "p2m1",
@@ -265,8 +253,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 450,
       tags: ["Pizza", "Garlic Bread"],
       color: "#B71C1C",
-      imageUrl:
-        "https://images.unsplash.com/photo-1571997478705-40b6f57d71b9?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/2619970/pexels-photo-2619970.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "p3m1",
@@ -297,8 +284,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 400,
       tags: ["Burgers", "Fast Food"],
       color: "#FFC107",
-      imageUrl:
-        "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "bg1m1",
@@ -333,8 +319,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 450,
       tags: ["Burgers", "Whopper"],
       color: "#FF8F00",
-      imageUrl:
-        "https://images.unsplash.com/photo-1550317138-10000687a72b?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/3219547/pexels-photo-3219547.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "bg2m1",
@@ -362,8 +347,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 500,
       tags: ["Burgers", "Indian Fusion"],
       color: "#FFB300",
-      imageUrl:
-        "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/2271107/pexels-photo-2271107.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "bg3m1",
@@ -393,8 +377,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 400,
       tags: ["Chinese", "Pan Asian"],
       color: "#388E3C",
-      imageUrl:
-        "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "c1m1",
@@ -428,8 +411,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 800,
       tags: ["Chinese", "Fine Dining"],
       color: "#2E7D32",
-      imageUrl:
-        "https://images.unsplash.com/photo-1583454122932-c8bfccee5d73?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/955137/pexels-photo-955137.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "c2m1",
@@ -460,8 +442,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 350,
       tags: ["South Indian", "Dosa"],
       color: "#7B1FA2",
-      imageUrl:
-        "https://images.unsplash.com/photo-1630383249896-424e482df921?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "si1m1",
@@ -496,8 +477,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 300,
       tags: ["South Indian", "Thali"],
       color: "#6A1B9A",
-      imageUrl:
-        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/4331490/pexels-photo-4331490.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "si2m1",
@@ -528,8 +508,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 700,
       tags: ["North Indian", "Mughlai"],
       color: "#1565C0",
-      imageUrl:
-        "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "ni1m1",
@@ -564,8 +543,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 450,
       tags: ["North Indian", "Dhaba Style"],
       color: "#1976D2",
-      imageUrl:
-        "https://images.unsplash.com/photo-1631452180519-9a977f6e3fb7?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/6260921/pexels-photo-6260921.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "ni2m1",
@@ -595,8 +573,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 350,
       tags: ["Desserts", "Ice Cream"],
       color: "#E91E63",
-      imageUrl:
-        "https://images.unsplash.com/photo-1501443762994-7a160e4b25ff?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "d1m1",
@@ -624,8 +601,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 500,
       tags: ["Desserts", "Bakery"],
       color: "#AD1457",
-      imageUrl:
-        "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/3026804/pexels-photo-3026804.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "d2m1",
@@ -663,8 +639,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 400,
       tags: ["Healthy", "Low Cal"],
       color: "#00897B",
-      imageUrl:
-        "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "h1m1",
@@ -692,8 +667,7 @@ export const restaurantsByCuisine: Record<string, Restaurant[]> = {
       costForTwo: 450,
       tags: ["Healthy", "Salads"],
       color: "#00796B",
-      imageUrl:
-        "https://images.unsplash.com/photo-1540189549519-4e1c52c89a2e?w=600&q=80&auto=format&fit=crop",
+      imageUrl: "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?w=600&h=400&fit=crop",
       menuItems: [
         {
           id: "h2m1",
