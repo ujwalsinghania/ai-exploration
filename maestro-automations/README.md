@@ -23,18 +23,17 @@ A food delivery app with three core flows:
 
 **Checkout** → Fill delivery address, phone, email, place order, see success confirmation
 
+---
+
 ### Previews
 
-<p align="center">
+<p align="left">
   <img src="screenshots/home.png" width="30%" />
   <img src="screenshots/restaurant-list.png" width="30%" />
-  <img src="screenshots/restaurant-item.png" width="30%" />
-</p>
-<p align="center">
-  <img src="screenshots/cart.png" width="30%" />
 </p>
 <p align="left">
-    <img src="screenshots/generated-tests.png" width="30%" />
+  <img src="screenshots/restaurant-item.png" width="30%" />
+  <img src="screenshots/cart.png" width="30%" />
 </p>
 
 ---
@@ -98,7 +97,7 @@ maestro studio
 
 ### Maestro Studio Demo
 
-<video src="https://github.com/ujwalsinghania/ai-exploration/blob/main/maestro-automations/screenshots/maestro-studio-demo.mp4" width="180"></video>
+https://github.com/ujwalsinghania/ai-exploration/blob/main/maestro-automations/screenshots/maestro-studio-demo.mp4
 
 ---
 
