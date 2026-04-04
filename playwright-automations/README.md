@@ -17,9 +17,8 @@ This project's test suite was written with the help of **Claude Code** (Anthropi
 
 **Video — Claude executing the plan and writing tests:**
 
-https://github.com/ujwalsinghania/ai-exploration/blob/main/playwright-automations/screenshots/execution.mp4
+https://github.com/user-attachments/assets/ea01c8fd-ad21-4eb6-9ef1-abe9a940d77c
 
-<video src="screenshots/execution.mp4" width="600"></video>
 
 > Claude writing all spec files, running them headed, and iterating on failures in one session.
 
