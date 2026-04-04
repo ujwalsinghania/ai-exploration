@@ -97,7 +97,9 @@ maestro studio
 
 ### Maestro Studio Demo
 
-https://github.com/ujwalsinghania/ai-exploration/blob/main/maestro-automations/screenshots/maestro-studio-demo.mp4
+
+https://github.com/user-attachments/assets/c8e86f21-d21c-4844-ad8d-6db182dc8015
+
 
 ---
 
